@@ -1,6 +1,4 @@
-#include <bits/stdc++.h>
 #include "QuickSort.h"
-using namespace std;
 
 int partition(int *a, int n, int lo, int hi){
 	int i = lo - 1;

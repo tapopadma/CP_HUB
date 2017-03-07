@@ -14,9 +14,10 @@
 #include "RMQ.h"
 #include "heap.h"
 #include "NcrModM.h"
+#include "LCA.h"
 using namespace std;
 
 int main(){
-	QuickSort q;q.testQuickSort();
+	LCA l;l.testLCA();
 	return 0;
 }
