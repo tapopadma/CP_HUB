@@ -13,7 +13,7 @@ private:
 	void dfs(int);
 	void bfs(int);
 	void dijkstra(int);
-	const int INF = 1000000009;
+	const static int INF = 1000000009;
 public:
 	Graph();
 	void testDFS();

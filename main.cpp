@@ -17,6 +17,6 @@
 using namespace std;
 
 int main(){
-	NcrModM n; n.testMnonPrime();
+	QuickSort q;q.testQuickSort();
 	return 0;
 }
