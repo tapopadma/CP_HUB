@@ -18,6 +18,6 @@
 using namespace std;
 
 int main(){
-	LCA l;l.testLCA();
+	LCA l; l.testLCA();
 	return 0;
 }
