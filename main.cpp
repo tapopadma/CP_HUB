@@ -15,9 +15,10 @@
 #include "heap.h"
 #include "NcrModM.h"
 #include "LCA.h"
+#include "InversionCounter.h"
 using namespace std;
 
 int main(){
-	LCA l; l.testLCA();
+	InversionCounter i;i.testInversionFenwickTree();
 	return 0;
 }
