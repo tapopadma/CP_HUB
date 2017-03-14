@@ -16,9 +16,10 @@
 #include "NcrModM.h"
 #include "LCA.h"
 #include "InversionCounter.h"
+#include "StringMatchingAhoCorasick.h"
 using namespace std;
 
 int main(){
-	InversionCounter i;i.testInversionFenwickTree();
+	StringMatchingAhoCorasick s;s.test();
 	return 0;
 }
