@@ -57,7 +57,7 @@ void Graph::bfs(int node){
 
 void Graph::loadGraph_weighted_undirected(bool smallGraph = false){
 	cin >> this->n_;
-	this->G_ = new vector<pair<int, int> >[n_];
+	this->G_ = new vector<pair<int, int> >[n_];	
 	if (smallGraph){
 		this->weightMatrix = new int *[n_];
 		for (int i = 0; i < n_; ++i){
@@ -66,10 +66,12 @@ void Graph::loadGraph_weighted_undirected(bool smallGraph = false){
 		}
 	}
 	cin >> this->m_;
+	this->p = new pair<int, pair<int, int> >[m_];
 	for (int i = 0; i < m_; ++i){
 		int u, v, w; cin >> u >> v >> w;
 		G_[u].push_back(pair<int, int>(v, w));
 		G_[v].push_back(pair<int, int>(u, w));
+		p[i] = make_pair(w, make_pair(u, v));
 		if (smallGraph){
 			weightMatrix[u][v] = weightMatrix[v][u] = w;
 		}
@@ -133,4 +135,84 @@ void Graph::testFloydWarshall(){
 			cout << "Distance between " << i << " & " << j << " : " << dist[i][j] << endl;
 		}
 	}
+}
+
+int Find(int x, UnionFind *pa){
+	if (pa[x].parent != x)
+		return pa[x].parent = Find(pa[x].parent, pa);
+	return pa[x].parent;
+}
+
+void Union(int x, int y, UnionFind *pa){
+	int xx = Find(x, pa);
+	int yy = Find(y, pa);
+	if (pa[xx].rank == pa[yy].rank){
+		pa[yy].parent = xx;
+		pa[xx].rank++;
+	}
+	else if (pa[xx].rank > pa[yy].rank){
+		pa[yy].parent = xx;
+	}
+	else{
+		pa[xx].parent = yy;
+	}
+}
+
+void Graph::KruskalMST(){//O(mlogn)
+	cin >> n_;
+	cin >> m_;
+	p = new pair<int, pair<int, int> >[m_];
+	for (int i = 0; i < m_; ++i){
+		cin >> p[i].second.first >> p[i].second.second >> p[i].first;
+	}
+	sort(p, p + m_);
+	UnionFind *pa = new UnionFind[n_];
+	for (int i = 0; i < n_; ++i){
+		pa[i].parent = i;
+		pa[i].rank = 0;
+	}
+	int tot = 0;
+	for (int i = 0; i < m_; ++i){
+		int u = p[i].second.first;
+		int v = p[i].second.second;
+		int w = p[i].first;
+		if (Find(u, pa) == Find(v, pa))continue;
+		Union(u, v, pa);
+		tot += w;
+	}
+	cout << "MST cost: " << tot << endl;
+}
+
+void Graph::PrimMST(){
+	loadGraph_weighted_undirected();
+	int x = 0;
+	set<pair<int, int> > Q;
+	cost[0] = 0;
+	Q.insert(pair<int, int>(cost[0], 0));
+	visited_ = new bool[n_];
+	for (int i = 0; i < n_; ++i) visited_[i] = false;	
+	int ans = 0;
+	while (!Q.empty()){
+		pair<int, int> pp = *Q.begin();
+		int x = pp.second;
+		int dx = pp.first;
+		Q.erase(pair<int, int>(dx, x));
+		visited_[x] = true;
+		ans += dx;
+		for (vector<pair<int, int> >::iterator it = G_[x].begin(); it != G_[x].end(); ++it){
+			int xx = (*it).first;
+			int dxx = (*it).second;
+			if (dxx < cost[xx] && !visited_[xx]){
+				Q.erase(pair<int, int>(cost[xx], xx));
+				cost[xx] = dxx;
+				Q.insert(pair<int, int>(cost[xx], xx));
+			}
+		}
+	}
+	cout << "MST cost: " << ans << endl;
+}
+
+void Graph::testMST(char c){
+	if(c == 'K') KruskalMST();
+	else PrimMST();
 }
