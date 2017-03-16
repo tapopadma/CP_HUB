@@ -1,6 +1,8 @@
 #include "NcrModM.h"
 #define ll long long
 
+ll  fac[1000000];
+
 int ncr(int n, int r){
 	if (r > n)return 0;
 	if (n == r)return 1;
@@ -50,15 +52,13 @@ ll expo(ll x, ll n, ll m){
 	return ret;
 }
 
-void NcrModM::testMlargePrime(){//inverse modulo
+void NcrModM::testMlargePrime(){//inverse modulo	
 	ll n, r, m; cin >> n >> r >> m;
-	ll ret = 1;
-	for (ll i = n; i > n - r; --i){
-		ret = (ret * i) % m;
-	}
-	for (ll i = 1; i <= r; ++i){
-		ret = (ret * expo(i, m - 2, m)) % m;
-	}
+	fac[0] = 1;
+	for(ll i=1;i<1000000;++i)fac[i] = (fac[i-1]*i)%m;
+	ll ret = fac[n];
+	ret = (ret * expo(fac[n-r], m-2, m))%m;
+	ret = (ret * expo(fac[r], m-2, m))%m;
 	cout << ret << endl;
 }
 

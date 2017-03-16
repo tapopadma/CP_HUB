@@ -20,6 +20,6 @@
 using namespace std;
 
 int main(){
-	StringMatchingAhoCorasick s;s.test();
+	NcrModM n;n.testMlargePrime();
 	return 0;
 }
