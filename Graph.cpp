@@ -216,3 +216,48 @@ void Graph::testMST(char c){
 	if(c == 'K') KruskalMST();
 	else PrimMST();
 }
+
+void Graph::dfs1(int node){
+	for (vector<int>::iterator it = g_[node].begin(); it != g_[node].end(); ++it){
+		int x = *it;
+		if (visited_[x])continue;
+		visited_[x] = true;
+		dfs1(x);
+	}
+	St.push(node);
+}
+
+void Graph::dfs2(int node){
+	cout << node << " ";
+	for (vector<int>::iterator it = gTR_[node].begin(); it != gTR_[node].end(); ++it){
+		int x = *it;
+		if (visited_[x])continue;
+		visited_[x] = true;
+		dfs2(x);
+	}
+}
+
+void Graph::testSCC(){
+	loadGraph_unweighted_directed();
+	for (int i = 0; i < n_; ++i){
+		if (visited_[i])continue;
+		visited_[i] = true;
+		dfs1(i);
+	}
+	for (int i = 0; i < n_; ++i){
+		visited_[i] = false;
+	}
+	gTR_ = new vector<int>[n_];
+	for (int i = 0; i < n_; ++i){
+		for (vector<int>::iterator it = g_[i].begin(); it != g_[i].end(); ++it){
+			int j = *it;
+			gTR_[j].push_back(i);
+		}
+	}
+	while (!St.empty()){
+		int node = St.top(); St.pop();
+		if (visited_[node])continue;
+		visited_[node] = true;
+		dfs2(node); cout << endl;
+	}
+}
