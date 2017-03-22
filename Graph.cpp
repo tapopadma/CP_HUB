@@ -1,5 +1,37 @@
 #include "Graph.h"
 
+void Graph::testBellmanFord(){
+	cin >> n_;
+	E_ = new edges[n_];
+	cost = new int[n_];
+	cin >> m_;
+	for (int i = 0; i < m_; ++i){
+		cin >> E_[i].src >> E_[i].dest >> E_[i].wt;
+	}
+	for (int i = 0; i < n_; ++i) cost[i] = INF; cost[0] = 0;
+	for (int i = 1; i < n_; ++i){
+		for (int j = 0; j < m_; ++j){
+			int src = E_[j].src;
+			int dest = E_[j].dest;
+			int wt = E_[j].wt;
+			if (cost[src] != INF && cost[dest] > cost[src] + wt){
+				cost[dest] = cost[src] + wt;
+			}
+		}
+	}
+	for (int i = 0; i < m_; ++i){
+		int src = E_[i].src;
+		int dest = E_[i].dest;
+		int wt = E_[i].wt;
+		if (cost[src] != INF && cost[src] + wt < cost[dest]){
+			cout << "Negative weight cycle found..." << endl;
+		}
+	}
+	for (int i = 0; i < n_; ++i){
+		cout << cost[i] << " ";
+	}
+}
+
 Graph::Graph(){
 }
 

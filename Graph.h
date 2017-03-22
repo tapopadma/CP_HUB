@@ -7,10 +7,16 @@ public:
 	int rank;
 };
 
+class edges{
+public:
+	int src, dest, wt;
+};
+
 class Graph{
 private:
 	vector<int> *g_, *gTR_;
 	pair<int, pair<int, int> > *p;
+	edges *E_;
 	vector<pair<int, int> > *G_;
 	bool *visited_;
 	int *cost;
@@ -34,6 +40,7 @@ public:
 	void testMST(char);
 	void testFloydWarshall();
 	void testSCC();
+	void testBellmanFord();
 	void loadGraph_unweighted_directed();
 	void loadGraph_weighted_undirected(bool);
 };
