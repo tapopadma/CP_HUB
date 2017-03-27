@@ -1,10 +1,3 @@
-/*
-By Anudeep Nekkanti
-Editorial at www.blog.anudeep.com/persistent-segment-trees-explained-with-spoj-problems
-Question at http://www.spoj.com/problems/COT/
-O( (N+M) * log N )
-*/
-
 #include "SegmentTreePersistent.h"
 
 #define fd(i,a,b) for(int i=a; i>=b; i--)
